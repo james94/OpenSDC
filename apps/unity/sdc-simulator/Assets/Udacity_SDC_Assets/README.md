@@ -6,6 +6,7 @@ Initially, these Udacity Self-Driving Car (SDC) assets came from their Unity 3D 
 
 - Unity Threading
 - SocketIO
+- Unity SimpleFileBrowser
 
 ## Unity Threading
 
@@ -80,6 +81,59 @@ NOTE: We maybe able to switch the **DEPRECATED SocketIO** with **GRPC** and/or r
     - netmq: https://github.com/zeromq/netmq
 
 - Unity-ZeroMQ-Example: https://github.com/valkjsaaa/Unity-ZeroMQ-Example
+
+## Unity SimpleFileBrowser
+
+Here are some key features of UnitySimpleFileBrowser:
+
+- **Cross-Platform File Browsing**
+- **File and Folder Selection**
+- **Save File Functionality**
+- **Custom File Filters**
+- **Asynchronous Operation**
+- **Quick Links**
+- **Search Functionality**
+- **Customizable UI**
+
+## Unity Standard Assets
+
+### Cameras
+
+- **FreeLookCam**: Useful for creating a dynamic camera that can orbit around a target, which could be used to observe the self-driving car from different angles.
+
+- **MultipurposeCameraRig**: Provides a versatile camera setup that can be adapted for various viewing needs in your simulation.
+
+### Characters
+
+- **ThirdPersonCharacter**: While not directly applicable to a car, this could be useful for pedestrian simulations in our environment.
+
+### Cross Platform Input
+
+- This system can be helpful in the case you plan to make your simulation accessible across different platforms, allowing for consistent input handling.
+
+### Effects
+
+- **ParticleSystems**: Can be used to simulate environmental effects like dust, smoke, or rain, which are crucial for realistic self-driving scenarios.
+- **WaterEffects**: Useful for simulating wet road conditions or water hazards.
+
+### Environment
+
+- **TerrainAssets**: These can be used to quickly create varied terrains for your driving scenarios
+- **Water**: For simulating water bodies that the self-driving car might encounter
+
+### Utility
+
+- **AutoMobileShaderSwitch**: Helps optimize shaders for mobile platforms if you plan to run simulations on mobile devices
+- **FOVKick**: Could be used to simulate camera effects during acceleration or collision events
+- **TimedObjectDestructor**: Useful for managing temporary objects in your simulation, like traffic or weather effects
+
+### Vehicles
+
+- **Car**: A basic car controller with physics based movement
+- **CarAudio**: Provides realistic car sound effects
+- **CarUserControl**: Allows for user input to control the car, which could be adapted for AI control
+- **Mudguard**: Adds visual effects for wheel interction with the ground.
+- **WheelEffects**: Simulates visual effects of wheels on different surfaces.
 
 ## Resources
 
