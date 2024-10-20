@@ -7,6 +7,8 @@ Initially, these Udacity Self-Driving Car (SDC) assets came from their Unity 3D 
 - Unity Threading
 - SocketIO
 - Unity SimpleFileBrowser
+- Editor
+- Unity Standard Assets
 
 ## Unity Threading
 
@@ -94,6 +96,14 @@ Here are some key features of UnitySimpleFileBrowser:
 - **Quick Links**
 - **Search Functionality**
 - **Customizable UI**
+
+## Editor (JetBrains IDE)
+
+Rider Unity Integration is designed to integrate JetBrains Rider IDE with Unity. Here are the three main classes:
+
+- 1\. Rider Class
+- 2\. User32Dll Class
+- 3\. RiderAssetPostprocessor Class
 
 ## Unity Standard Assets
 
