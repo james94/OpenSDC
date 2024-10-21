@@ -145,6 +145,20 @@ Rider Unity Integration is designed to integrate JetBrains Rider IDE with Unity.
 - **Mudguard**: Adds visual effects for wheel interction with the ground.
 - **WheelEffects**: Simulates visual effects of wheels on different surfaces.
 
+### Transition Standard Assets to Unity 2022.3.50f1
+
+For Unity "**Standard Assets**", I referenced a few github repos as well as Udacity's Unity "Standard Assets":
+
+- Udacity's **self-driving-car-sim** Standard Assets: https://github.com/udacity/self-driving-car-sim/tree/master/Assets/Standard%20Assets
+
+- Unity-Standard-Assets-2022_LTS-usage: https://github.com/deathwatchgaming/Unity-Standard-Assets-2022_LTS-usage
+
+- Unity-StandardAssets-2020: https://github.com/ImLp/Unity-StandardAssets-2020
+
+- https://github.com/supinzhen/Unity-Standard-Assets-2018.4
+
+**NOTE**: through my research, I have found these Unity "**Standard Assets**" are deprecated and I think have been replaced with features that now come with Unity when you create a new project. However, I am keeping them for now since Udacity uses them in their **self-driving-car-sim** github repo and we are trying to migrate **Standard Assets** over to our OpenSDC's **sdc-simulator** powered by **High Definition Rendering Pipeline (HDRP)**.
+
 ## Resources
 
 - Perplexity.ai (AI assistant helping me with migrating Udacity's SDC simulator assets to our Unity 2022.3.50f1 HDRP SDC simulator project): https://www.perplexity.ai/search/you-are-a-software-simulation-Xh4OSupQQzaMOFc1tJBAaw
