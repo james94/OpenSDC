@@ -7,8 +7,9 @@ Initially, these Udacity Self-Driving Car (SDC) assets came from their Unity 3D 
 - Unity Threading
 - SocketIO
 - Unity SimpleFileBrowser
-- Editor
+- Editor (JetBrains Rider IDE)
 - Unity Standard Assets
+- Unity Editor Image Effects Integration
 
 ## Unity Threading
 
@@ -97,7 +98,7 @@ Here are some key features of UnitySimpleFileBrowser:
 - **Search Functionality**
 - **Customizable UI**
 
-## Editor (JetBrains IDE)
+## Editor (JetBrains Rider IDE)
 
 Rider Unity Integration is designed to integrate JetBrains Rider IDE with Unity. Here are the three main classes:
 
@@ -158,6 +159,18 @@ For Unity "**Standard Assets**", I referenced a few github repos as well as Udac
 - https://github.com/supinzhen/Unity-Standard-Assets-2018.4
 
 **NOTE**: through my research, I have found these Unity "**Standard Assets**" are deprecated and I think have been replaced with features that now come with Unity when you create a new project. However, I am keeping them for now since Udacity uses them in their **self-driving-car-sim** github repo and we are trying to migrate **Standard Assets** over to our OpenSDC's **sdc-simulator** powered by **High Definition Rendering Pipeline (HDRP)**.
+
+## Unity Editor Image Effects Integration
+
+There are multiple image effects that we can configure and this Unity **apps/unity/sdc-simulator/Assets/Udacity_SDC_Assets/Editor/** asset folder
+contains **ImageEffects** asset that comes with Unity Editor Inspector integration for each image effect.
+
+- Antialiasing Editor
+- BloomAndFlares Editor
+- ...
+- VignetteAndChromaticAberration
+
+Check out more [ImageEffects Unity Editor Inspector Integrated Assets](./Editor/ImageEffects)
 
 ## Resources
 
