@@ -10,6 +10,9 @@ Initially, these Udacity Self-Driving Car (SDC) assets came from their Unity 3D 
 - Editor (JetBrains Rider IDE)
 - Unity Standard Assets
 - Unity Editor Image Effects Integration
+- Road Kit
+- Race Track Lake
+
 
 ## Unity Threading
 
@@ -171,6 +174,15 @@ contains **ImageEffects** asset that comes with Unity Editor Inspector integrati
 - VignetteAndChromaticAberration
 
 Check out more [ImageEffects Unity Editor Inspector Integrated Assets](./Editor/ImageEffects)
+
+
+## Road Kit
+
+More info coming soon.
+
+## Race Track Lake
+
+More info coming soon.
 
 ## Resources
 
