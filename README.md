@@ -46,6 +46,18 @@ After migrating Udacity's **self-driving-car-sim** assets over to our Unity 3D H
 
 **Figure 2:** Unity3D Jungle Track Training Scene (ported over to HDRP before HDRP Fixes as we see pink)
 
+After instructing my **Unity 3D 2022.3.50f1 HDRP project** through **HDRP Wizard** to **Convert All Built-in Materials to HDRP**, we were able to successfully automate most of our **SDC Simulator materials** to HDRP materials that **use HDRP built-in shaders**. We can see most of the pink objects from our scenes earlier are now illustrated in their expected color.
+
+![](./docs/images/udacity_jungle_track_training_after_hdrp_fix_in_unity_2022_3_50f1.png)
+
+**Figure 3:** Unity3D Jungle Track Training Scene (ported over to HDRP with automated HDRP Fixes via HDRP Wizard)
+
+![](./docs/images/udacity_lake_track_training_after_auto_hdrp_fix_in_unity_2022_3_50f1.png)
+
+**Figure 4:** Unity3D Lake Track Training Scene (ported over to HDRP with automated HDRP Fixes via HDRP Wizard)
+
+- **TODO (JG Oct 22, 2024)**: We can see most of the materials have been successfully updated to HDRP materials. However with the trees, some are still pink as shown in **Figure 4**. So, we will have to do some manual updating for these materials to HDRP to be compatible.
+
 ### Launch Unity 3D SDC Simulator from Source
 
 1\. To launch **sdc-simulator** project, make sure you downloaded and installed **Unity 3D 2022.3.50f1** from **[UnityHub](https://unity.com/download)** or your preferred method.
