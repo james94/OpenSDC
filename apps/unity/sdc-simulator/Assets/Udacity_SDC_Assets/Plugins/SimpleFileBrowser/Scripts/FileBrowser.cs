@@ -801,6 +801,8 @@ namespace SimpleFileBrowser
 
 		#region Delegates
 		public delegate void OnSuccess( string[] paths );
+		// Udacity's SimpleFileBrowser used a different delegate for single file selection
+		// public delegate void OnSuccess( string path );
 		public delegate void OnCancel();
 		public delegate bool FileSystemEntryFilter( FileSystemEntry entry );
 #if UNITY_EDITOR || UNITY_ANDROID
@@ -1048,7 +1050,7 @@ namespace SimpleFileBrowser
 			if( FileBrowserHelpers.ShouldUseSAF )
 			{
 				AddQuickLink( m_skin.DriveIcon, PickFolderQuickLinkText, SAF_PICK_FOLDER_QUICK_LINK_PATH );
-				
+
 				try
 				{
 					FetchPersistedSAFQuickLinks();
@@ -1166,7 +1168,7 @@ namespace SimpleFileBrowser
 						//	{
 						//		driveName = "Drive " + driveIndex++;
 						//	}
-						//}	
+						//}
 
 						string driveName;
 						if( !defaultPathInitialized )

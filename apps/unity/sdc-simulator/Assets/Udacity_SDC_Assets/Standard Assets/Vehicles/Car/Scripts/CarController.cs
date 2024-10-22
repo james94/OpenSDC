@@ -1,7 +1,11 @@
 using System;
+using System.Collections;
+using System.IO;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-#pragma warning disable 649
+// #pragma warning disable 649
 namespace UnityStandardAssets.Vehicles.Car
 {
     internal enum CarDriveType
@@ -38,6 +42,14 @@ namespace UnityStandardAssets.Vehicles.Car
         [SerializeField] private float m_SlipLimit;
         [SerializeField] private float m_BrakeTorque;
 
+        // Udacity SDC Sim Integration
+        public const string CSVFileName = "driving_log.csv";
+        public const string DirFrames = "IMG";
+
+        [SerializeField] private Camera CenterCamera;
+        [SerializeField] private Camera LeftCamera;
+        [SerializeField] private Camera RightCamera;
+
         private Quaternion[] m_WheelMeshLocalRotations;
         private Vector3 m_Prevpos, m_Pos;
         private float m_SteerAngle;
@@ -48,13 +60,81 @@ namespace UnityStandardAssets.Vehicles.Car
         private Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
 
+        // Udacity SDC Sim Integration
+        private string m_saveLocation = "";
+        private Queue<CarSample> carSamples;
+		private int TotalSamples;
+		private bool isSaving;
+		private Vector3 saved_position;
+		private Quaternion saved_rotation;
+
         public bool Skidding { get; private set; }
+
         public float BrakeInput { get; private set; }
-        public float CurrentSteerAngle{ get { return m_SteerAngle; }}
-        public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude*2.23693629f; }}
-        public float MaxSpeed{get { return m_Topspeed; }}
+
+        // Udacity SDC Sim Integration
+        private bool m_isRecording = false;
+        public bool IsRecording {
+            get
+            {
+                return m_isRecording;
+            }
+
+            set
+            {
+                m_isRecording = value;
+                if(value == true)
+                {
+					Debug.Log("Starting to record");
+					carSamples = new Queue<CarSample>();
+					StartCoroutine(Sample());
+                }
+				else
+                {
+                    Debug.Log("Stopping record");
+                    StopCoroutine(Sample());
+                    Debug.Log("Writing to disk");
+					//save the cars coordinate parameters so we can reset it to this properly after capturing data
+					saved_position = transform.position;
+					saved_rotation = transform.rotation;
+					//see how many samples we captured use this to show save percentage in UISystem script
+					TotalSamples = carSamples.Count;
+					isSaving = true;
+					StartCoroutine(WriteSamplesToDisk());
+
+                };
+            }
+
+        }
+
+        // Udacity SDC Sim Integration
+		public bool checkSaveLocation()
+		{
+			if (m_saveLocation != "")
+			{
+				return true;
+			}
+			else
+			{
+				// SimpleFileBrowser.ShowSaveDialog (OpenFolder, null, true, null, "Select Output Folder", "Select");
+                SimpleFileBrowser.FileBrowser.ShowSaveDialog(OpenFolder, null, SimpleFileBrowser.FileBrowser.PickMode.Folders,
+                                                            false, null, null, "Select Output Folder", "Select");
+			}
+			return false;
+		}
+
+        public float CurrentSteerAngle {
+            get { return m_SteerAngle; }
+            set { m_SteerAngle = value; }
+        }
+
+        public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude * 2.23693629f; } }
+
+        public float MaxSpeed{ get { return m_Topspeed; } }
+
         public float Revs { get; private set; }
-        public float AccelInput { get; private set; }
+
+        public float AccelInput { get; set; }
 
         // Use this for initialization
         private void Start()
@@ -126,6 +206,14 @@ namespace UnityStandardAssets.Vehicles.Car
             Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
         }
 
+        // Udacity SDC Sim Integration
+        public void Update()
+        {
+            if (IsRecording)
+            {
+                //Dump();
+            }
+        }
 
         public void Move(float steering, float accel, float footbrake, float handbrake)
         {
@@ -352,7 +440,6 @@ namespace UnityStandardAssets.Vehicles.Car
             }
         }
 
-
         private bool AnySkidSoundPlaying()
         {
             for (int i = 0; i < 4; i++)
@@ -364,5 +451,134 @@ namespace UnityStandardAssets.Vehicles.Car
             }
             return false;
         }
+
+        // Udacity SDC Sim Integration
+
+        //Changed the WriteSamplesToDisk to a IEnumerator method that plays back recording along with percent status from UISystem script
+		//instead of showing frozen screen until all data is recorded
+		public IEnumerator WriteSamplesToDisk()
+		{
+			yield return new WaitForSeconds(0.000f); //retrieve as fast as we can but still allow communication of main thread to screen and UISystem
+			if (carSamples.Count > 0) {
+				//pull off a sample from the que
+				CarSample sample = carSamples.Dequeue();
+
+				//pysically moving the car to get the right camera position
+				transform.position = sample.position;
+				transform.rotation = sample.rotation;
+
+				// Capture and Persist Image
+				string centerPath = WriteImage (CenterCamera, "center", sample.timeStamp);
+				string leftPath = WriteImage (LeftCamera, "left", sample.timeStamp);
+				string rightPath = WriteImage (RightCamera, "right", sample.timeStamp);
+
+				string row = string.Format ("{0},{1},{2},{3},{4},{5},{6}\n", centerPath, leftPath, rightPath, sample.steeringAngle, sample.throttle, sample.brake, sample.speed);
+				File.AppendAllText (Path.Combine (m_saveLocation, CSVFileName), row);
+			}
+			if (carSamples.Count > 0) {
+				//request if there are more samples to pull
+				StartCoroutine(WriteSamplesToDisk());
+			}
+			else
+			{
+				//all samples have been pulled
+				StopCoroutine(WriteSamplesToDisk());
+				isSaving = false;
+
+				//need to reset the car back to its position before ending recording, otherwise sometimes the car ended up in strange areas
+				transform.position = saved_position;
+				transform.rotation = saved_rotation;
+				m_Rigidbody.velocity = new Vector3(0f,-10f,0f);
+				Move(0f, 0f, 0f, 0f);
+
+			}
+		}
+
+		public float getSavePercent()
+		{
+			return (float)(TotalSamples-carSamples.Count)/TotalSamples;
+		}
+
+		public bool getSaveStatus()
+		{
+			return isSaving;
+		}
+
+
+        public IEnumerator Sample()
+        {
+                // Start the Coroutine to Capture Data Every Second.
+            // Persist that Information to a CSV and Perist the Camera Frame
+            yield return new WaitForSeconds(0.0666666666666667f);
+
+            if (m_saveLocation != "")
+            {
+                CarSample sample = new CarSample();
+
+                sample.timeStamp = System.DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff");
+                sample.steeringAngle = m_SteerAngle / m_MaximumSteerAngle;
+                sample.throttle = AccelInput;
+                sample.brake = BrakeInput;
+                sample.speed = CurrentSpeed;
+                sample.position = transform.position;
+                sample.rotation = transform.rotation;
+
+                carSamples.Enqueue(sample);
+
+                sample = null;
+                //may or may not be needed
+            }
+
+            // Only reschedule if the button hasn't toggled
+            if (IsRecording)
+            {
+                StartCoroutine(Sample());
+            }
+
+        }
+
+        // private void OpenFolder(string location)
+        // {
+        //     m_saveLocation = location;
+        //     Directory.CreateDirectory (Path.Combine(m_saveLocation, DirFrames));
+        // }
+        private void OpenFolder(string[] locations)
+        {
+            if (locations != null && locations.Length > 0) {
+                m_saveLocation = locations[0];
+                Directory.CreateDirectory (Path.Combine(m_saveLocation, DirFrames));
+            }
+        }
+
+        private string WriteImage (Camera camera, string prepend, string timestamp)
+        {
+            //needed to force camera update
+            camera.Render();
+            RenderTexture targetTexture = camera.targetTexture;
+            RenderTexture.active = targetTexture;
+            Texture2D texture2D = new Texture2D (targetTexture.width, targetTexture.height, TextureFormat.RGB24, false);
+            texture2D.ReadPixels (new Rect (0, 0, targetTexture.width, targetTexture.height), 0, 0);
+            texture2D.Apply ();
+            byte[] image = texture2D.EncodeToJPG ();
+            UnityEngine.Object.DestroyImmediate (texture2D);
+            string directory = Path.Combine(m_saveLocation, DirFrames);
+            string path = Path.Combine(directory, prepend + "_" + timestamp + ".jpg");
+            File.WriteAllBytes (path, image);
+            image = null;
+            return path;
+        }
     }
+
+    // Udacity SDC Sim Integration
+    internal class CarSample
+    {
+        public Quaternion rotation;
+        public Vector3 position;
+        public float steeringAngle;
+        public float throttle;
+        public float brake;
+        public float speed;
+        public string timeStamp;
+    }
+
 }
