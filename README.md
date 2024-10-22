@@ -31,7 +31,17 @@ git lfs pull
 
 ### Unity 3D Self-Driving Car Simulator
 
-The simulator is based on Udacity's archived Unity Self-Driving Car simulator. We will update it to work with our Unity 3D version.
+The simulator is based on Udacity's archived Unity Self-Driving Car simulator. We will update it to work with our Unity 3D 2022.3.50f1 HDRP project.
+
+After migrating Udacity's **self-driving-car-sim** assets over to our Unity 3D HDRP project and making some necessary, we were able to load scenes from Udacity's **Self Driving Car** asset. You will notice pink because the assets need to be updated to be compatible with HDRP.
+
+![](./docs/images/udacity_lake_track_training_before_hdrp_fix_in_unity_2022_3_50f1.png)
+
+**Figure 1:** Unity3D Lake Track Training Scene (ported over to HDRP before HDRP Fixes as we see pink)
+
+![](./docs/images/udacity_jungle_track_training_before_hdrp_fix_in_unity_2022_3_50f1.png)
+
+**Figure 2:** Unity3D Jungle Track Training Scene (ported over to HDRP before HDRP Fixes as we see pink)
 
 Heres a link to self-driving-car-sim public archive for reference: https://github.com/udacity/self-driving-car-sim/tree/master
 
