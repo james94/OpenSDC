@@ -6,6 +6,9 @@ Open Source Self-Driving Car
 
 - Clone OpenSDC Repo
 - Self-Driving Car Simulator
+    - Unity 3D SDC Simulator Overview
+    - Launch Unity 3D SDC Simulator from Source
+    - Udacity Unity 3D Pre-Built SDC Simulators
 - Self-Driving Car Docker Image
 
 ## Clone OpenSDC Repo
@@ -29,7 +32,7 @@ git lfs pull
 
 ## Self-Driving Car Simulator
 
-### Unity 3D Self-Driving Car Simulator
+### Unity 3D SDC Simulator Overview
 
 The simulator is based on Udacity's archived Unity Self-Driving Car simulator. We will update it to work with our Unity 3D 2022.3.50f1 HDRP project.
 
@@ -43,15 +46,32 @@ After migrating Udacity's **self-driving-car-sim** assets over to our Unity 3D H
 
 **Figure 2:** Unity3D Jungle Track Training Scene (ported over to HDRP before HDRP Fixes as we see pink)
 
-Heres a link to self-driving-car-sim public archive for reference: https://github.com/udacity/self-driving-car-sim/tree/master
+### Launch Unity 3D SDC Simulator from Source
 
-#### Resources
+1\. To launch **sdc-simulator** project, make sure you downloaded and installed **Unity 3D 2022.3.50f1** from **[UnityHub](https://unity.com/download)** or your preferred method.
 
-- Unity Simple File Browser: https://github.com/yasirkula/UnitySimpleFileBrowser
+2\. Open **Unity Hub** after you've downloaded it.
 
-### Unity 3D Pre-Built Self-Driving Car Simulator
+3\. Click **Installs** tab, click **Install Editor**, and click **Install** for **Unity 3D 2022.3.50f1**.
+
+4\. Click **Projects** tab, click **Add**, click **Add project from disk**, provide the location of our **sdc-simulator** of OpenSDC project and click **Add Project**:
+
+~~~bash
+# After clicking "Add project from disk", you can add "sdc-simulator" folder
+apps/unity/sdc-simulator
+~~~
+
+- **NOTE**: After opening our **sdc-simulator** in **Unity Hub**, you can launch the **"Unity3D Lake Track Training Scene"** located on path `OpenSDC/apps/unity/sdc-simulator/Assets/Udacity_SDC_Assets/1_SelfDrivingCar/Scenes/LakeTrackTraining.unity`
+
+- **NOTE**: After opening our **sdc-simulator** in **Unity Hub**, you can launch the **"Unity3D Jungle Track Training Scene"** located on path `OpenSDC/apps/unity/sdc-simulator/Assets/Udacity_SDC_Assets/1_SelfDrivingCar/Scenes/JungleTrackTraining.unity`
+
+If you are interested in learning more about the Unity 3D Udacity SDC Assets that go into making the **Self-Driving Car Simulator**, you can learn more in [Unity 3D Udacity SDC Assets: README.md](./apps/unity/sdc-simulator/Assets/Udacity_SDC_Assets/README.md) where I have started documenting features of each of these assets.
+
+### Udacity Unity 3D Pre-Built SDC Simulators
 
 - For more information on Udacity's self-driving-car-sim, you can checkout our [Udacity Self-Driving Car Simulators Notes](docs/UDACITY_CARSIM.md) to see how to launch precompiled Unity Simulator builds
+
+Heres a link to Udacity's **self-driving-car-sim public archive** for their source code for reference: https://github.com/udacity/self-driving-car-sim/tree/master
 
 ## Self-Driving Car Docker Image
 
