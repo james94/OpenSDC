@@ -16,6 +16,7 @@ A modular, end-to-end software platform for the research, development, simulatio
 - [Python Modules (ML/Orchestration)](#python-modules-mlorchestration) 
 - [C#/Unity3D Simulation](#cunity3d-simulation)  
 - [Project Structure](#project-structure)  
+- [How To Run](#how-to-run)
 
 ---
 
@@ -158,6 +159,20 @@ autonomous-driving-stack/
 ├── interface/                 # React/FastAPI  
 └── tools/                     # CI/CD pipelines  
 ```
+
+## How To Run
+
+### Build SDVCore Docker Image
+
+~~~bash
+python scripts/build_image/build.py
+~~~
+
+### Deploy SDVCore Docker Container
+
+~~~bash
+python scripts/deploy/docker/deploy.py
+~~~
 
 ## Resources
 
